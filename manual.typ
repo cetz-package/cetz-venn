@@ -19,7 +19,7 @@
 
 #rect(width: 100%, fill: blue.darken(30%),
   table(columns: (1fr, 1fr), align: (left, right), stroke: none,
-    text(white)[*CeTZ Venn*], text(white)[#cetz-venn.version.map(v => [#v]).join([.])]))
+    text(white)[*CeTZ Venn*], text(white)[#cetz-venn.version]))
 
 // Outline
 #{
