@@ -1,1 +1,2 @@
 /tests/**/*.pdf
+/tests/**/out/*

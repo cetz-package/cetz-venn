@@ -1,6 +1,6 @@
 # CeTZ Venn
 
-A CeTZ library for drawing simple two- or three-set Venn diagrams.
+A [CeTZ](https://github.com/cetz-package/cetz) library for drawing simple two- or three-set Venn diagrams.
 
 ## Examples
 <!-- img width is set so the table gets evenly spaced by GitHubs css -->
@@ -24,11 +24,13 @@ A CeTZ library for drawing simple two- or three-set Venn diagrams.
 
 ## Usage
 
-For information, see the [manual (stable)](https://github.com/johannes-wolf/cetz-venn/blob/stable/manual.pdf?raw=true).
+This package requires CeTZ version >= 0.2.0!
+
+For information, see the [manual (stable)](https://github.com/cetz-package/cetz-venn/blob/stable/manual.pdf?raw=true).
 
 To use this package, simply add the following code to your document:
 ```
-#import "@preview/cetz:0.2.1"
+#import "@preview/cetz:0.2.2"
 #import "@preview/cetz-venn:0.1.0"
 
 #cetz.canvas({
