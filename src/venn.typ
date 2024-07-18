@@ -19,15 +19,20 @@
   let keys = (
     "fill": style.fill,
     "stroke": style.stroke,
+    "layer": 0,
+    "ab-stroke": none,
+    "ac-stroke": none,
+    "bc-stroke": none,
   )
 
   let new = (:)
   for combo in set-combinations {
     for (key, def) in keys {
       key = combo + "-" + key
-      new.insert(key, args.at(key, default: def))
+      new.insert(key, args.at(key, default: keys.at(key, default: def)))
     }
   }
+
   return new
 }
 
@@ -37,6 +42,7 @@
 /// The `venn2` function has two sets `a` and `b`, each of them having the following attributes:
 ///   - `*-fill`: Fill color
 ///   - `*-stroke`: Stroke style
+///   - `*-layer`: CeTZ layer index
 /// To set a set-attribute, combine the set name (`a`) and the attribute key (`fill`) with a dash: `a-fill`.
 ///
 /// ```example
@@ -75,24 +81,28 @@
       hide(b);
     })
 
-    rect((rel: (-1 - padding, -1 - padding), to: pos-a),
-         (rel: (+1 + padding, +1 + padding), to: pos-b),
-         fill: args.not-ab-fill, stroke: args.not-ab-stroke, name: "frame")
+    on-layer(args.not-ab-layer,
+      rect((rel: (-1 - padding, -1 - padding), to: pos-a),
+          (rel: (+1 + padding, +1 + padding), to: pos-b),
+          fill: args.not-ab-fill, stroke: args.not-ab-stroke, name: "frame"))
 
-    merge-path(name: "a-shape", {
-      arc-through("ab.0", (rel: (-1, 0), to: pos-a), "ab.1")
-      arc-through("ab.1", (rel: (-1, 0), to: pos-b), "ab.0")
-    }, fill: args.a-fill, stroke: args.a-stroke, close: true)
+    on-layer(args.ab-layer,
+      merge-path(name: "ab-shape", {
+        arc-through("ab.0", (rel: (-1, 0), to: pos-b), "ab.1")
+        arc-through("ab.1", (rel: (+1, 0), to: pos-a), "ab.0")
+      }, fill: args.ab-fill, stroke: args.ab-stroke, close: true))
 
-    merge-path(name: "b-shape", {
-      arc-through("ab.0", (rel: (+1, 0), to: pos-b), "ab.1")
-      arc-through("ab.1", (rel: (+1, 0), to: pos-a), "ab.0")
-    }, fill: args.b-fill, stroke: args.b-stroke, close: true)
+    on-layer(args.a-layer,
+      merge-path(name: "a-shape", {
+        arc-through("ab.0", (rel: (-1, 0), to: pos-a), "ab.1")
+        arc-through("ab.1", (rel: (-1, 0), to: pos-b), "ab.0")
+      }, fill: args.a-fill, stroke: args.a-stroke, close: true))
 
-    merge-path(name: "ab-shape", {
-      arc-through("ab.0", (rel: (-1, 0), to: pos-b), "ab.1")
-      arc-through("ab.1", (rel: (+1, 0), to: pos-a), "ab.0")
-    }, fill: args.ab-fill, stroke: args.ab-stroke, close: true)
+    on-layer(args.b-layer,
+      merge-path(name: "b-shape", {
+        arc-through("ab.0", (rel: (+1, 0), to: pos-b), "ab.1")
+        arc-through("ab.1", (rel: (+1, 0), to: pos-a), "ab.0")
+      }, fill: args.b-fill, stroke: args.b-stroke, close: true))
 
     anchor("a", (rel: (-1 + distance / 2, 0), to: pos-a))
     anchor("b", (rel: (+1 - distance / 2, 0), to: pos-b))
@@ -160,37 +170,41 @@
     let i-bc-0 = cetz.vector.add(m-bc, cetz.vector.rotate-z((+calc.sqrt(1 - calc.pow(d-bc / 2, 2)), 0), angle-bc + 90deg))
     let i-bc-1 = cetz.vector.add(m-bc, cetz.vector.rotate-z((-calc.sqrt(1 - calc.pow(d-bc / 2, 2)), 0), angle-bc + 90deg))
 
-    rect((rel: (-1 - padding, +1 + padding), to: pos-a),
-         (rel: (+1 + padding, -1 - padding), to: (pos-b.at(0), pos-c.at(1))),
-         fill: args.not-abc-fill, stroke: args.not-abc-stroke, name: "frame")
-
-    for (name, angle) in (("a", 0deg), ("c", 360deg / 3), ("b", 2 * 360deg / 3)) {
-      merge-path(name: "a-shape", {
-        group({
-          rotate(angle)
-          arc-through(i-ab-0, (rel: (-1, 0), to: pos-a), i-ac-0)
-          arc-through((),     (rel: cetz.vector.rotate-z((-1,0), angle-ac), to: pos-c), i-bc-1)
-          arc-through((),     (rel: (-1, 0), to: pos-b), i-ab-0)
-        })
-      }, fill: args.at(name + "-fill"), stroke: args.at(name + "-stroke"), close: true)
-    }
+    on-layer(args.not-abc-layer,
+      rect((rel: (-1 - padding, +1 + padding), to: pos-a),
+          (rel: (+1 + padding, -1 - padding), to: (pos-b.at(0), pos-c.at(1))),
+          fill: args.not-abc-fill, stroke: args.not-abc-stroke, name: "frame"))
 
     for (name, angle) in (("ab", 0deg), ("ac", 360deg / 3), ("bc", 2 * 360deg / 3)) {
-      merge-path(name: name + "-shape", {
-        group({
-          rotate(angle)
-          arc-through(i-bc-1, (rel: (-1, 0), to: pos-b), i-ab-0)
-          arc-through((),     (rel: (+1, 0), to: pos-a), i-ac-1)
-          arc-through((),     (rel: (0, +1), to: pos-c), i-bc-1)
-        })
-      }, fill: args.at(name + "-fill"), stroke: args.at(name + "-stroke"), close: true)
+      on-layer(args.at(name + "-layer"),
+        merge-path(name: name + "-shape", {
+          group({
+            rotate(angle)
+            arc-through(i-bc-1, (rel: (-1, 0), to: pos-b), i-ab-0)
+            arc-through((),     (rel: (+1, 0), to: pos-a), i-ac-1)
+            arc-through((),     (rel: (0, +1), to: pos-c), i-bc-1)
+          })
+        }, fill: args.at(name + "-fill"), stroke: args.at(name + "-stroke"), close: true))
     }
 
-    merge-path(name: "abc-shape", {
-      arc-through(i-ab-1, (rel: cetz.vector.rotate-z((+1,0), (angle-ab + angle-ac) / 2), to: pos-a), i-ac-1)
-      arc-through((),     (rel: cetz.vector.rotate-z((-1,0), (angle-ac + angle-bc) / 2), to: pos-c), i-bc-1)
-      arc-through((),     (rel: cetz.vector.rotate-z((-1,0), (180deg + angle-ab + angle-bc) / 2), to: pos-b), i-ab-1)
-    }, fill: args.abc-fill, stroke: args.abc-stroke, close: true)
+    on-layer(args.abc-layer,
+      merge-path(name: "abc-shape", {
+        arc-through(i-ab-1, (rel: cetz.vector.rotate-z((+1,0), (angle-ab + angle-ac) / 2), to: pos-a), i-ac-1)
+        arc-through((),     (rel: cetz.vector.rotate-z((-1,0), (angle-ac + angle-bc) / 2), to: pos-c), i-bc-1)
+        arc-through((),     (rel: cetz.vector.rotate-z((-1,0), (180deg + angle-ab + angle-bc) / 2), to: pos-b), i-ab-1)
+      }, fill: args.abc-fill, stroke: args.abc-stroke, close: true))
+
+    for (name, angle) in (("a", 0deg), ("c", 360deg / 3), ("b", 2 * 360deg / 3)) {
+      on-layer(args.at(name + "-layer"),
+        merge-path(name: "a-shape", {
+          group({
+            rotate(angle)
+            arc-through(i-ab-0, (rel: (-1, 0), to: pos-a), i-ac-0)
+            arc-through((),     (rel: cetz.vector.rotate-z((-1,0), angle-ac), to: pos-c), i-bc-1)
+            arc-through((),     (rel: (-1, 0), to: pos-b), i-ab-0)
+          })
+        }, fill: args.at(name + "-fill"), stroke: args.at(name + "-stroke"), close: true))
+    }
 
     let a-a = cetz.vector.lerp(i-bc-0, i-bc-1, 1.5)
     let a-b = cetz.vector.lerp(i-ac-0, i-ac-1, 1.5)
