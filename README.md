@@ -24,7 +24,7 @@ A [CeTZ](https://github.com/cetz-package/cetz) library for drawing simple two- o
 
 ## Usage
 
-This package requires CeTZ version >= 0.2.0!
+This package requires CeTZ version >= 0.2.2!
 
 For information, see the [manual (stable)](https://github.com/cetz-package/cetz-venn/blob/stable/manual.pdf?raw=true).
 

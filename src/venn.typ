@@ -1,4 +1,4 @@
-#import "@preview/cetz:0.2.1"
+#import "@preview/cetz:0.2.2"
 
 #let default-style = (
   stroke: auto,
