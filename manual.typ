@@ -35,6 +35,8 @@
 CeTZ Venn is a tiny package for drawing two- and three-set Venn diagrams
 using Typst and CeTZ.
 
+*CeTZ version $>=$ 0.2.2 is required!*
+
 = Examples
 
 A simple two set Venn diagram:

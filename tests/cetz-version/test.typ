@@ -2,15 +2,16 @@
 #import "/src/lib.typ": venn2, venn3
 #import "/tests/helper.typ": *
 
-// Import the minimum supported cetz version
-#import "@preview/cetz:0.2.0"
+// Import all supported cetz versions
+#for ver in ("0.2.2",) {
+  import ("@preview/cetz:" + ver)
+  import cetz.draw: content, set-style
 
-#import cetz.draw: content, set-style
+  test-case({
+    venn2()
+  })
 
-#test-case({
-  venn2()
-})
-
-#test-case({
-  venn3()
-})
+  test-case({
+    venn3()
+  })
+}
