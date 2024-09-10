@@ -57,7 +57,7 @@
 ///   - `ab`
 ///   - `not-ab`
 ///
-/// - ..args (any): Set attributes
+/// - ..args (any): Set and style attributes
 /// - name (none, string): Element name
 #let venn2(..args, name: none) = {
   import cetz.draw: *
@@ -65,8 +65,11 @@
   let distance = 1.25
 
   group(name: name, ctx => {
-    let style = cetz.styles.resolve(ctx.style, base: default-style, merge: (:), root: "venn")
-    let padding = cetz.util.resolve-number(ctx, style.padding)
+    let style = cetz.styles.resolve(ctx.style, base: default-style, root: "venn", merge: args.named())
+    let padding = cetz.util.as-padding-dict(style.padding)
+    for (k, v) in padding {
+      padding.insert(k, cetz.util.resolve-number(ctx, v))
+    }
 
     let args = venn-prepare-args(2, args.named(), style)
 
@@ -82,8 +85,8 @@
     })
 
     on-layer(args.not-ab-layer,
-      rect((rel: (-1 - padding, -1 - padding), to: pos-a),
-          (rel: (+1 + padding, +1 + padding), to: pos-b),
+      rect((rel: (-1 - padding.left, -1 - padding.bottom), to: pos-a),
+          (rel: (+1 + padding.right, +1 + padding.top), to: pos-b),
           fill: args.not-ab-fill, stroke: args.not-ab-stroke, name: "frame"))
 
     on-layer(args.ab-layer,
@@ -107,7 +110,7 @@
     anchor("a", (rel: (-1 + distance / 2, 0), to: pos-a))
     anchor("b", (rel: (+1 - distance / 2, 0), to: pos-b))
     anchor("ab", (pos-a, 50%, pos-b))
-    anchor("not-ab", (rel: (padding / 2, padding / 2), to: "frame.south-west"))
+    anchor("not-ab", (rel: (padding.left / 2, padding.bottom / 2), to: "frame.south-west"))
   })
 }
 
@@ -133,14 +136,17 @@
 ///
 /// - ..args (any): Set attributes
 /// - name (none, string): Element name
-#let venn3(..args, padding: .5, name: none) = {
+#let venn3(..args, name: none) = {
   import cetz.draw: *
 
   let distance = .75
 
   group(name: name, ctx => {
-    let style = cetz.styles.resolve(ctx.style, base: default-style, root: "venn")
-    let padding = cetz.util.resolve-number(ctx, style.padding)
+    let style = cetz.styles.resolve(ctx.style, base: default-style, root: "venn", merge: args.named())
+    let padding = cetz.util.as-padding-dict(style.padding)
+    for (k, v) in padding {
+      padding.insert(k, cetz.util.resolve-number(ctx, v))
+    }
 
     let args = venn-prepare-args(3, args.named(), style)
 
@@ -171,8 +177,8 @@
     let i-bc-1 = cetz.vector.add(m-bc, cetz.vector.rotate-z((-calc.sqrt(1 - calc.pow(d-bc / 2, 2)), 0), angle-bc + 90deg))
 
     on-layer(args.not-abc-layer,
-      rect((rel: (-1 - padding, +1 + padding), to: pos-a),
-          (rel: (+1 + padding, -1 - padding), to: (pos-b.at(0), pos-c.at(1))),
+      rect((rel: (-1 - padding.left, +1 + padding.top), to: pos-a),
+          (rel: (+1 + padding.right, -1 - padding.bottom), to: (pos-b.at(0), pos-c.at(1))),
           fill: args.not-abc-fill, stroke: args.not-abc-stroke, name: "frame"))
 
     for (name, angle) in (("ab", 0deg), ("ac", 360deg / 3), ("bc", 2 * 360deg / 3)) {
@@ -217,7 +223,7 @@
     anchor("bc", cetz.vector.lerp(a-b, a-c, .5))
     anchor("ac", cetz.vector.lerp(a-a, a-c, .5))
     anchor("abc", (0,0))
-    anchor("not-abc", (rel: (padding / 2, padding / 2), to: "frame.south-west"))
+    anchor("not-abc", (rel: (padding.left / 2, padding.bottom / 2), to: "frame.south-west"))
   })
 }
 

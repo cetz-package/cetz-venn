@@ -29,6 +29,6 @@
 })
 
 #test-case({
-  set-style(venn: (stroke: blue, fill: gray))
+  set-style(venn: (stroke: blue, fill: gray, padding: (top: 1, bottom: .5, rest: .25)))
   venn2(name: "v", a-stroke: black, b-fill: green)
 })
