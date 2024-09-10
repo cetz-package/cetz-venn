@@ -78,7 +78,9 @@ cetz.canvas({
 All diagrams use the style root `venn` and accept the following style keys:
 #doc-style.show-parameter-block("fill", "fill", default: "white", [The default fill for all elements])
 #doc-style.show-parameter-block("stroke", "stroke", default: auto, [The default stroke for all elements])
-#doc-style.show-parameter-block("padding", "number", default: 2em, [Padding of the outer (rect) element])
+#doc-style.show-parameter-block("padding", ("number", "dictionary"), default: 2em, [
+  Padding of the outer (rect) element. Per side padding can be specified by passing a dicitonary with one or more
+  of the following keys: `top`, `bottom`, `left`, `right` and `rest`, where `rest` acts as a fallback for unset values.])
 
 = Functions
 
