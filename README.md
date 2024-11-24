@@ -31,7 +31,7 @@ For information, see the [manual (stable)](https://github.com/cetz-package/cetz-
 To use this package, simply add the following code to your document:
 ```
 #import "@preview/cetz:0.3.1"
-#import "@preview/cetz-venn:0.1.1"
+#import "@preview/cetz-venn:0.1.2"
 
 #cetz.canvas({
   cetz-venn.venn2()
