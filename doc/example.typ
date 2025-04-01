@@ -1,5 +1,5 @@
 #import "/src/lib.typ"
-#import "@preview/cetz:0.3.2"
+#import "@preview/cetz:0.3.4"
 
 // String that gets prefixed to every example code
 // for compilation only!
@@ -8,10 +8,13 @@
 
 
 /// Render an example from a string
-/// - source (string, raw): Example source code
-/// - args (arguments): Arguments passed down to the canvas
-/// - vertical (boolean): If true, show the code below the canvas
-#let example(source, ..args, vertical: false) = {
+#let example(
+  /// Example source code -> string | raw
+  source,
+  /// Arguments passed down to the canvas -> arguments
+  ..args,
+  /// If true, show the code below the canvas -> boolean
+  vertical: false) = {
   if type(source) == content {
     source = source.text
   }
