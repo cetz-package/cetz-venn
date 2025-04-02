@@ -1,4 +1,4 @@
-#import "@preview/cetz:0.3.2"
+#import "@preview/cetz:0.3.4"
 
 #let default-style = (
   stroke: auto,
@@ -57,9 +57,11 @@
 ///   - `ab`
 ///   - `not-ab`
 ///
-/// - ..args (any): Set and style attributes
-/// - name (none, string): Element name
-#let venn2(..args, name: none) = {
+#let venn2(
+  /// Set and style attributes -> any
+  ..args,
+  /// Element name -> none | string
+  name: none) = {
   import cetz.draw: *
 
   let distance = 1.25
@@ -134,9 +136,11 @@
 ///   - `abc`
 ///   - `not-abc`
 ///
-/// - ..args (any): Set attributes
-/// - name (none, string): Element name
-#let venn3(..args, name: none) = {
+#let venn3(
+  /// Set attributes -> any
+  ..args,
+  /// Element name -> none | string
+  name: none) = {
   import cetz.draw: *
 
   let distance = .75
@@ -226,4 +230,3 @@
     anchor("not-abc", (rel: (padding.left / 2, padding.bottom / 2), to: "frame.south-west"))
   })
 }
-
