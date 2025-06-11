@@ -1,4 +1,4 @@
-#import "@preview/tidy:0.4.2"
+#import "@preview/tidy:0.4.3"
 #import "/doc/example.typ": example
 #import "/doc/style.typ" as doc-style
 #import "/src/lib.typ" as cetz-venn
