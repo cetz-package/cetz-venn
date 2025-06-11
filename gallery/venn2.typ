@@ -1,6 +1,6 @@
 #set page(width: auto, height: auto, margin: .5cm)
-#import "@preview/cetz:0.3.4"
-#import "@preview/cetz-venn:0.1.3": venn2
+#import "@preview/cetz:0.4.0"
+#import "@preview/cetz-venn:0.1.4": venn2
 
 #cetz.canvas({
   import cetz.draw: *

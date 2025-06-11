@@ -1,5 +1,5 @@
 #import "/src/lib.typ"
-#import "@preview/cetz:0.3.4"
+#import "@preview/cetz:0.4.0"
 
 // String that gets prefixed to every example code
 // for compilation only!
