@@ -24,10 +24,9 @@ jobs:
         with:
           crate: tytanic
           git: https://github.com/tingerrr/tytanic.git
-      - uses: yusancky/setup-typst@v2
-        id: setup-typst
+      - uses: typst-community/setup-typst@v4
         with:
-          version: 'v0.13.1'
+          typst-version: 'v0.13.1'
       - run: |
           mkdir -p ~/.local/share/typst/packages/preview/cetz
           git clone --depth 1 --branch v0.3.4 https://github.com/cetz-package/cetz.git ~/.local/share/typst/packages/preview/cetz/0.3.4
