@@ -27,9 +27,7 @@ jobs:
       - uses: typst-community/setup-typst@v4
         with:
           typst-version: 'v0.13.1'
-      - run: |
-          mkdir -p ~/.local/share/typst/packages/preview/cetz
-          git clone --depth 1 --branch v0.3.4 https://github.com/cetz-package/cetz.git ~/.local/share/typst/packages/preview/cetz/0.3.4
+          zip-packages: requirements.json
       - run: |
           just install @local
           just install @preview
