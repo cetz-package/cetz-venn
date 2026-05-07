@@ -52,3 +52,7 @@
   set-style(venn: (stroke: blue, fill: gray, padding: (top: 1, bottom: .5, rest: .25)))
   venn3(name: "v", a-stroke: black, ab-fill: green)
 })
+
+#test-case({
+  venn3(a-radius: 1, b-radius: 1.25cm, c-distance: 0.5, abc-fill: red)
+})

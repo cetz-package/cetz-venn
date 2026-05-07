@@ -24,15 +24,15 @@ A [CeTZ](https://github.com/cetz-package/cetz) library for drawing simple two- o
 
 ## Usage
 
-This package requires CeTZ version >= 0.3.4!
+This package requires CeTZ version >= 0.5.0!
 
 For information, see the [manual (stable)](https://github.com/cetz-package/cetz-venn/blob/stable/manual.pdf?raw=true).
 
 To use this package, simply add the following code to your document:
 
 ```
-#import "@preview/cetz:0.4.0"
-#import "@preview/cetz-venn:0.1.4"
+#import "@preview/cetz:0.5.2"
+#import "@preview/cetz-venn:0.2.0"
 
 #cetz.canvas({
   cetz-venn.venn2()
