@@ -1,4 +1,4 @@
-#import "@preview/cetz:0.4.0"
+#import "@preview/cetz:0.5.2"
 #import "/src/lib.typ" as venn
 
 /// Test case canvas surrounded by a red border
