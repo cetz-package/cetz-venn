@@ -7,12 +7,12 @@ A [CeTZ](https://github.com/cetz-package/cetz) library for drawing simple two- o
 <table><tr>
   <td>
     <a href="gallery/venn2.typ">
-      <img src="gallery/venn2.png" width="250px">
+      <img src="gallery/venn2.png" width="250px" alt="Two set Venn diagram">
     </a>
   </td>
   <td>
     <a href="gallery/venn3.typ">
-      <img src="gallery/venn3.png" width="250px">
+      <img src="gallery/venn3.png" width="250px" alt="Three set Venn diagram">
     </a>
   </td>
 </tr><tr>
